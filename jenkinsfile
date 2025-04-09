@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build container with OpenBmc') {
+            steps {
+                script {
+                    sh "docker build -t openbmc-qemu ."
+                }
+            }
+        }
+
+        stage('Start container with OpenBmc') {
+            steps {
+                script {
+                    sh "docker run -d --rm -p 2222:2222 -p 2443:2443 -p 2623:2623/udp openbmc-qemu:latest"
+                }
+            }
+        }
+    }
+}
