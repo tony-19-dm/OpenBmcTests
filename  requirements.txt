@@ -1,0 +1,15 @@
+# Для Redfish API тестов
+pytest
+requests
+
+# Для WebUI тестов
+selenium
+
+# Для нагрузочных тестов
+locust
+
+# Для отключения верификации SSL
+urllib3
+
+# Убирает предупреждение об устаревшем InsecureRequestWarning
+certifi
