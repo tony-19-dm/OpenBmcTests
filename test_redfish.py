@@ -54,19 +54,19 @@ def test_system_info(redfish_session):
     assert "Status" in data, f"Поле 'Status' отсутствует. Ответ: {data}"
     assert "PowerState" in data, f"Поле 'PowerState' отсутствует. Ответ: {data}"
 
-def test_pover_on(session):
+def test_pover_on(redfish_session):
     pover_usl = f"https://{BMC_IP}/redfish/v1/Systems/system/Actions/ComputerSystem.Reset"
 
     pover_data = {
         "ResetType": "On"
     }
 
-    response = session.post(pover_usl, json = pover_data)
+    response = redfish_session.post(pover_usl, json = pover_data)
     assert response.status_code == 204, "Error when trying to turn on the server" # Текущая версия Bmc возвращает 204 
 
     # Проверка изменения статуса системы
     system_url = f"https://{BMC_IP}/redfish/v1/Systems/system"
-    response = session.get(system_url)
+    response = redfish_session.get(system_url)
     system_info = response.json()
 
     assert system_info["PowerState"] == "Off", "The server did not turn on" # Off -  заглушка, текущая версия Bmc не включается
